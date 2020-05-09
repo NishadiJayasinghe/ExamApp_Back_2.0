@@ -3,7 +3,6 @@ var app = express();
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var path = require('path');
 var jsonwebtoken = require('jsonwebtoken');
 
 
@@ -12,16 +11,13 @@ var jsonwebtoken = require('jsonwebtoken');
 var student = require('./routes/student');
 var lecturer = require('./routes/lecturer');
 var admin = require('./routes/admin');
-
-
 var cors = require('cors');
-app.use(express.static('/public'));
 app.use(cors());
-app.use('/public', express.static('/public'));
+
 
 
 //connect to db
-var portSelected = 8080;
+var portSelected = 3000;
 var dbe = 'mongodb://localhost/examApp';
   app.listen(portSelected, function(){
     console.log('Database connected. Exam Application listening to port ' + portSelected)
@@ -32,13 +28,12 @@ mongoose.connect(dbe);
 //app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 //enable CORS
@@ -68,9 +63,9 @@ app.use(function(req, res, next){
 // routes
 
 //app.use('/', index);
-app.use('/student', student);
-app.use('/lecturer', lecturer);
-app.use('/admin', admin);
+app.use('/api/student', student);
+app.use('/api/lecturer', lecturer);
+app.use('/api/admin', admin);
 
 
 

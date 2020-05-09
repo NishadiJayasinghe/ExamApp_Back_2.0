@@ -1,60 +1,14 @@
-'use strict';
 
-
-var express = require('express');
-var router = express.Router();
-var app = express();
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-var cors = require('cors')
-var Student = require('../models/student');
-var Admin = require('../models/admin');
-var Lecturer = require('../models/lecturer');
-var AdminController = require('../controllers/admin');
-var AddAdminSubjects = require('../models/adminAddSubjects')
-var jwt = require('jsonwebtoken');
+const Student = require('../models/student');
+const Admin = require('../models/admin');
+const Lecturer = require('../models/lecturer');
+const AddAdminSubjects = require('../models/adminAddSubjects')
+const jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 var passwordValidator = require('password-validator');
-//var cryptoHandler = ('../controllers/cryptoHandler');
-app.use(cors())
-router.use(cors())
-var http = require('http');
-var url = require('url');
-var fs = require('fs');
-var path = require('path');
-var jsonwebtoken = require('jsonwebtoken');
-
-app.use(cors())
-router.use(cors())
-
-
-
-//support on x-www-form-urlencoded
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
-
-router.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
-
-
 
 
 // get student details
-
-
 exports.getSubjects = function(req, res){
   console.log('getting the details')
   var query = Subject.find({'studentId': req.body.studentId});
@@ -102,14 +56,6 @@ exports.getDetails = function(req, res){
 }  
 
 
-
-
-
-
-
-
-
-
 //Student sign Up
 
 exports.studentSignup = function(req, res){
@@ -129,7 +75,7 @@ exports.studentSignup = function(req, res){
           var schema = new passwordValidator();
           schema
           .is().min(6)
-          .is().max(8)
+          .is().max(20)
           .has().uppercase()
           .has().lowercase()
           .has().symbols()
@@ -143,10 +89,10 @@ exports.studentSignup = function(req, res){
           student.lastName = req.body.lastName;
           student.faculty = req.body.faculty;
           student.department = req.body.department;
-          student.stdRegNumber = req.body.stdRegNumber;
-          student.indexNumber = req.body.indexNumber;
+          student.stdRegNumber = req.body.regNo;
+          student.indexNumber = req.body.indexNo;
           student.email = req.body.email;
-          student.contactNumber = req.body.contactNumber;
+          student.contactNumber = req.body.contactNo;
 
            var legalPassword =  schema.validate(req.body.password);
            if(legalPassword == true){
