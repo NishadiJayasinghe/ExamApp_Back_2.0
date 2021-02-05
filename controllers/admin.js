@@ -124,6 +124,7 @@ exports.studentSignup = function(req, res){
 }
 
 
+
 // ### Change student password ### 
 /*
 exports.updatePassword = function(req, res){
@@ -215,6 +216,74 @@ exports.deleteStudent = function(req, res){
     }
   })
 
+}
+
+
+
+// .............. Admin signup
+
+exports.adminSignup = function(req, res){
+  console.log('############ Student Register ###############');
+  Admin.findOne({adminRegNumber : req.body.adminRegNumber} && {email: req.body.email})
+  .exec(function(err, admins){
+    if(err){
+      console.log('#### error occured #######' +err);
+      res.send('error');
+    }else{
+      if(admins !== null){
+        console.log("########### not an null data : admins already exist ######");
+        res.json({ message: 'failed', details: "index number or email already registered!", status: "signup_failed"});
+      }else{
+
+        //.............................................validate password..........................................................
+        var schema = new passwordValidator();
+        schema
+        .is().min(6)
+        .is().max(20)
+        .has().uppercase()
+        .has().lowercase()
+        .has().symbols()
+        .has().digits()
+        .has().not().spaces()
+
+
+        console.log("########### null data #######################");
+        var admin = new Admin();
+        admin.firstName = req.body.firstName;
+        admin.lastName = req.body.lastName;
+        admin.designation = req.body.designation;
+        admin.department = req.body.department;
+        admin.adminRegNumber = req.body.adminRegNumber;
+        admin.email = req.body.email;
+        admin.contactNumber = req.body.contactNumber;
+
+         var legalPassword =  schema.validate(req.body.password);
+         if(legalPassword == true){
+          admin.password = bcrypt.hashSync(req.body.password, 8);
+             console.log('password entered successfully')
+             res.status(201);
+         }else{
+           console.log('password is not validated')
+           res.status(409)
+           res.json({message: 'failed', details: 'PASSWORD IS INCORRECT'})
+         }
+        
+
+         admin.save(function(err){
+        if(err){
+          console.log('########### error occured ###############')
+          console.log(err);
+          res.send(err);
+        }else{
+          admin.password = undefined;
+          res.json({message: 'success', details: "SignUp successfully", content: admin});
+          console.log("succesfully signed up ")
+        }
+      });
+      }
+    }
+  }
+  )
 }
 
 

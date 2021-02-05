@@ -13,6 +13,7 @@ router.post('/loginreq', AdminController.loginRequired);
 router.get('/getStudentSubjects', AdminController.loginRequired, AdminController.getSubjects)
 router.get('/getLecturerDetails', AdminController.loginRequired, AdminController.getDetails)
 
+router.post('/adminSignup', AdminController.adminSignup)
 router.post('/studentSignup', AdminController.studentSignup);
 router.post('/lecturerSignup', AdminController.lecturerSignup);
 router.post('/adminLogin', AdminController.adminLogin);
