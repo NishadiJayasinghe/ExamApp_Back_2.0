@@ -190,21 +190,8 @@ exports.subjectSubmission = function(req,res){
         console.log('...............student is not null good to go...............')
         var subjects = new Subject();
           subjects.studentId = req.body.studentId
-          subjects.subject.subjectName1 = req.body.subjectName1
-          subjects.subject.subjectName2 = req.body.subjectName2,
-          subjects.subject.subjectName3 = req.body.subjectName3,
-          subjects.subject.subjectName4 = req.body.subjectName4,
-          subjects.subject.subjectName5 = req.body.subjectName5,
-          subjects.subject.subjectName6 = req.body.subjectName6,
-          subjects.subject.subjectName7 = req.body.subjectName7,
-          subjects.subject.subjectName7 = req.body.subjectName7,
-          subjects.subject.subjectName7 = req.body.subjectName7,
-          subjects.subject.subjectName8 = req.body.subjectName8,
-          subjects.subject.subjectName9 = req.body.subjectName9,
-          subjects.subject.subjectName10 = req.body.subjectName10,
-          subjects.subject.subjectName11 = req.body.subjectvName11,
-          subjects.subject.subjectName12 = req.body.subjectName12,
-          subjects.subject.subjectName13 = req.body.subjectName13
+          subjects.subject.subjectName = req.body.subjectName
+
 
           subjects.save(function(err, result){
             if(err){

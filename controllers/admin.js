@@ -92,7 +92,7 @@ exports.studentSignup = function(req, res){
           student.stdRegNumber = req.body.regNo;
           student.indexNumber = req.body.indexNo;
           student.email = req.body.email;
-          student.contactNumber = req.body.contactNo;
+          student.contactNumber = req.body.contactNumber;
 
            var legalPassword =  schema.validate(req.body.password);
            if(legalPassword == true){
@@ -417,19 +417,8 @@ exports.addSubjects = function(req, res){
         var addSubjects = new AddAdminSubjects();
         addSubjects.year = req.body.year,
         addSubjects.semester = req.body.semester,
-        addSubjects.subject.subjectName1 = req.body.subjects1,
-        addSubjects.subject.subjectName2 = req.body.subjects2,
-        addSubjects.subject.subjectName3 = req.body.subjects3,
-        addSubjects.subject.subjectName4 = req.body.subjects4,
-        addSubjects.subject.subjectName5 = req.body.subjects5,
-        addSubjects.subject.subjectName6 = req.body.subjects6,
-        addSubjects.subject.subjectName7 = req.body.subjects7,
-        addSubjects.subject.subjectName8 = req.body.subjects8,
-        addSubjects.subject.subjectName9 = req.body.subjects9,
-        addSubjects.subject.subjectName10 = req.body.subjects10,
-        addSubjects.subject.subjectName11 = req.body.subjects11,
-        addSubjects.subject.subjectName12 = req.body.subjects12,
-        addSubjects.subject.subjectName13 = req.body.subjects13
+        addSubjects.subject.subjectName = req.body.subjectName,
+
 
         addSubjects.save(function(err, result){
           if(err){
@@ -463,7 +452,6 @@ exports.updateSubject = function(req, res){
       res.status(409)
       res.json({message: 'failed', details: 'no such subject recorded'});
     }else{
-     // subjectName =[subjectName1, subjectName2, subjectName3, subjectName3, subjectName4, subjectName5, subjectName6, subjectName7, subjectName8, subjectName9, subjects10, subjects11, subjects12, subjects13]
      
      AddAdminSubjects.findOne({'oldSubjectName': req.body.oldSubjectName})
      .exec(function(err, results){
